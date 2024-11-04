@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loja Virtual Nordeste</title>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body>
+
+  <div class="w3-bar w3-teal">
+    <a href="#" onclick="mostrar('inicio')" class="w3-bar-item w3-button">Início</a>
+    <a href="#" onclick="mostrar('sobre')" class="w3-bar-item w3-button">Sobre a Empresa</a>
+    <a href="#" onclick="mostrar('contato')" class="w3-bar-item w3-button">Contato</a>
+    <a href="#" onclick="mostrar('produtos')" class="w3-bar-item w3-button">Produtos</a>
+  </div>
+
+  <div id="inicio" class="w3-container pagina" style="display: block;">
+    <h2>Bem-vindo à Loja Virtual Encanto Nordestino</h2>
+    <p>Explore nossa loja com uma variedade de produtos decorativos da cultura nordestina.</p>
+  </div>
+
+  <div id="sobre" class="w3-container pagina" style="display: none;">
+    <h2>Sobre Nós</h2>
+    <p>Fundada com a missão de levar a autenticidade e o charme da cultura nordestina para o seu lar, nossa loja valoriza o talento de artesãos e produtores locais. 
+        Cada peça que oferecemos carrega uma história, criada com cuidado e tradição por mãos habilidosas.</p>
+  </div>
+
+  <div id="contato" class="w3-container pagina" style="display: none;">
+    <h2>Contato</h2>
+    <p>Email: contato@encantonordestino.com.br</p>
+    <p>Telefone: (81) 9999-9999</p>
+  </div>
+
+  <div id="produtos" class="w3-container pagina" style="display: none;">
+    <h2>Gestão de Produtos</h2>
+    <form id="formProduto" class="w3-margin-bottom" onsubmit="adicionarProduto(event)">
+      <input type="text" id="nomeProduto" class="w3-input w3-border" placeholder="Nome do Produto" required>
+      <input type="number" id="precoProduto" class="w3-input w3-border" placeholder="Preço" required>
+      <button type="submit" class="w3-button w3-teal w3-margin-top">Adicionar Produto</button>
+    </form>
+    <ul id="listaProdutos" class="w3-ul w3-border"></ul>
+  </div>
+
+  <script>
+    const produtos = [];
+
+    function mostrar(id) {
+      document.querySelectorAll('.pagina').forEach(p => p.style.display = 'none');
+      document.getElementById(id).style.display = 'block';
+    }
+
+    function adicionarProduto(event) {
+      event.preventDefault();
+      const nome = nomeProduto.value;
+      const preco = parseFloat(precoProduto.value);
+      produtos.push({ nome, preco });
+      atualizarLista();
+      formProduto.reset();
+    }
+
+    function atualizarLista() {
+      listaProdutos.innerHTML = produtos.map((p, i) => `
+        <li class="w3-display-container">
+          ${p.nome} - R$ ${p.preco.toFixed(2)}
+          <span onclick="removerProduto(${i})" class="w3-button w3-display-right w3-red">Remover</span>
+        </li>
+      `).join('');
+    }
+
+    function removerProduto(index) {
+      produtos.splice(index, 1);
+      atualizarLista();
+    }
+  </script>
+</body>
+</html>
